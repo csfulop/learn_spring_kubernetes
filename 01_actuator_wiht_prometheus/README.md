@@ -9,16 +9,16 @@ your_dockerhub_username=FIXME
 
 ./gradlew bootBuildImage
 
-docker run --rm -d -p 8080:8080 --name spring_kubernetes kubernetes:0.0.1-SNAPSHOT
+docker run --rm -d -p 8080:8080 --name spring_kubernetes spring_boot_actuator:0.0.1-SNAPSHOT
 curl http://localhost:8080/actuator | jq .
 docker stop spring_kubernetes
-docker tag kubernetes:0.0.1-SNAPSHOT $your_dockerhub_username/spring_kubernetes
-docker push $your_dockerhub_username/spring_kubernetes
-docker rmi kubernetes:0.0.1-SNAPSHOT $your_dockerhub_username/spring_kubernetes
+docker tag spring_boot_actuator:0.0.1-SNAPSHOT $your_dockerhub_username/spring_kubernetes:v1
+docker push $your_dockerhub_username/spring_kubernetes:v1
+docker rmi spring_boot_actuator:0.0.1-SNAPSHOT $your_dockerhub_username/spring_kubernetes:v1
 
-# kubectl create deployment spring-kubernetes --image=$your_dockerhub_username/spring_kubernetes --dry-run -o=yaml > deployment.yaml
-# echo --- >> deployment.yaml
-# kubectl create service nodeport spring-kubernetes --tcp=8080:8080 --dry-run -o=yaml >> deployment.yaml
+kubectl create deployment spring-kubernetes --image=$your_dockerhub_username/spring_kubernetes:v1 --dry-run -o=yaml > deployment.yaml
+echo --- >> deployment.yaml
+kubectl create service nodeport spring-kubernetes --tcp=8080:8080 --dry-run -o=yaml >> deployment.yaml
 
 kubectl apply -f deployment.yaml
 kubectl get all

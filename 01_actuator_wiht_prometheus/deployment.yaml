@@ -18,8 +18,8 @@ spec:
         app: spring-kubernetes
     spec:
       containers:
-      - image: csfulop/spring_kubernetes
-        name: spring-kubernetes-nxqz6
+      - image: csfulop/spring_kubernetes:v1
+        name: spring-kubernetes-jnpjk
         resources: {}
 status: {}
 ---
