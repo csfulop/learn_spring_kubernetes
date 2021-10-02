@@ -1,22 +1,22 @@
-# Integrate Spring Actuator with Prometheus
+# Custom metrics with SpringBoot Actuator
 
-## SpringBoot app with Actuator and Prometheus
+Based on: https://autsoft.net/defining-custom-metrics-in-a-spring-boot-application-using-micrometer/
 
-https://spring.io/guides/gs/spring-boot-kubernetes/
+## build SpringBoot app and create Deployment
 
 ```
 your_dockerhub_username=FIXME
 
 ./gradlew bootBuildImage
 
-docker run --rm -d -p 8080:8080 --name spring_kubernetes spring_boot_actuator:0.0.1-SNAPSHOT
+docker run --rm -d -p 8080:8080 --name spring_kubernetes spring_boot_custom_metrics:0.0.1-SNAPSHOT
 curl http://localhost:8080/actuator | jq .
 docker stop spring_kubernetes
-docker tag spring_boot_actuator:0.0.1-SNAPSHOT $your_dockerhub_username/spring_kubernetes:v1
-docker push $your_dockerhub_username/spring_kubernetes:v1
-docker rmi spring_boot_actuator:0.0.1-SNAPSHOT $your_dockerhub_username/spring_kubernetes:v1
+docker tag spring_boot_custom_metrics:0.0.1-SNAPSHOT $your_dockerhub_username/spring_kubernetes:v2
+docker push $your_dockerhub_username/spring_kubernetes:v2
+docker rmi spring_boot_custom_metrics:0.0.1-SNAPSHOT $your_dockerhub_username/spring_kubernetes:v2
 
-# kubectl create deployment spring-kubernetes --image=$your_dockerhub_username/spring_kubernetes:v1 --dry-run -o=yaml > deployment.yaml
+# kubectl create deployment spring-kubernetes --image=$your_dockerhub_username/spring_kubernetes:v2 --dry-run -o=yaml > deployment.yaml
 # echo --- >> deployment.yaml
 # kubectl create service nodeport spring-kubernetes --tcp=8080:8080 --dry-run -o=yaml >> deployment.yaml
 
@@ -26,6 +26,10 @@ kubectl get all
 node_port=$(kubectl get service/spring-kubernetes -o go-template='{{(index .spec.ports 0).nodePort}}')
 echo SpringBoot app: http://$(minikube ip):$node_port/actuator
 curl http://$(minikube ip):$node_port/actuator | jq .
+curl http://$(minikube ip):$node_port/api/hello
+curl http://$(minikube ip):$node_port/api/hello/Csabi
+curl http://$(minikube ip):$node_port/api/hello/Kati
+curl http://$(minikube ip):$node_port/actuator/prometheus | grep hello_total
 ```
 
 ## Install Prometheus

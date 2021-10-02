@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: spring-service-monitor
+  labels:
+    release: prometheus
+    app: spring-kubernetes
+spec:
+  endpoints:
+    - port: 8080-8080
+      path: '/actuator/prometheus'
+  namespaceSelector:
+    any: true
+  selector:
+    matchLabels:
+      app: spring-kubernetes
