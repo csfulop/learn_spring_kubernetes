@@ -1,0 +1,18 @@
+{{- if .Values.kubeprometheusstack.enabled -}}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "learnspring.fullname" . }}
+  labels:
+    release: {{ include "learnspring.fullname" . }}
+    {{- include "learnspring.labels" . | nindent 4 }}
+spec:
+  endpoints:
+    - port: http
+      path: '/actuator/prometheus'
+  namespaceSelector:
+    any: false
+  selector:
+    matchLabels:
+      {{- include "learnspring.selectorLabels" . | nindent 6 }}
+{{- end }}
