@@ -20,7 +20,7 @@ public class TestSlowFibonacciCalculator {
                    "5,5",
                    "6,8"
                })
-    public void testFibonacci(int n, int expected) {
+    public void testFibonacci(int n, long expected) {
         assertThat(fib.calc(n), is(expected));
     }
 }
