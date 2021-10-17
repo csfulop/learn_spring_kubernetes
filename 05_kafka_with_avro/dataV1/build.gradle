@@ -1,0 +1,25 @@
+plugins {
+    id 'java'
+    id 'com.github.davidmc24.gradle.plugin.avro' version '1.2.0'
+}
+
+group = 'hu.fcs.spring'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.apache.avro:avro:1.10.2'
+}
+
+avro {
+    createSetters = false
+    fieldVisibility = "PRIVATE"
+}
+
+test {
+    useJUnitPlatform()
+}

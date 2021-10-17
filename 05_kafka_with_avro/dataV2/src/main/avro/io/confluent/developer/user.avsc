@@ -1,0 +1,10 @@
+{
+  "namespace": "hu.fcs.avro",
+  "type": "record",
+  "name": "User",
+  "fields": [
+    {"name": "name", "type": "string"},
+    {"name": "age", "type": "int"},
+    {"name": "nickName", "type": ["null", "string"], "default" : null}
+  ]
+}

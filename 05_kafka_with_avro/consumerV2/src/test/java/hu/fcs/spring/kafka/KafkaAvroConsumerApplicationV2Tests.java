@@ -1,0 +1,14 @@
+package hu.fcs.spring.kafka;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+
+@SpringBootTest
+class KafkaAvroConsumerApplicationV2Tests {
+
+    @Test
+    void contextLoads() {
+    }
+
+}

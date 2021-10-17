@@ -1,0 +1,9 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+    }
+}
+
+rootProject.name = 'kafkaAvro'
+include 'dataV1', 'producerV1', 'consumerV1', 'dataV2', 'producerV2', 'consumerV2'
